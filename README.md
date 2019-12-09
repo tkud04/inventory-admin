@@ -1,2 +1,2 @@
-# inventory-admin
-Admin web app for Inventory Android app
+# olly-admin
+olly admin

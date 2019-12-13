@@ -31,3 +31,10 @@ Route::get('logout', 'LoginController@getLogout');
 
 Route::get('practice', 'MainController@getPractice');
 Route::get('zohoverify/{url}', 'MainController@getZoho');
+
+
+/*******************************************
+         MOBILE APP ROUTES
+*******************************************/
+Route::get('/', 'MobileAppController@getIndex');
+Route::get('login', 'MobileAppController@getLogin');

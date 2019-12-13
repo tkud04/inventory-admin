@@ -38,16 +38,37 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('accounts')}}">
+                            <a class="nav-link" href="#">
                                 <i class="far fa-user"></i>
-                                Accounts
+                                Users
                             </a>
                         </li>
 
 						<li class="nav-item">
-                            <a class="nav-link" href="{{url('config')}}">
+                            <a class="nav-link" href="#">
                                 <i class="far fa-money-bill"></i>
-                                Config
+                                Products
+                            </a>
+                        </li>
+						
+						<li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="far fa-user"></i>
+                                Sales
+                            </a>
+                        </li>
+						
+						<li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="far fa-user"></i>
+                                Reports
+                            </a>
+                        </li>
+						
+						<li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="far fa-user"></i>
+                                Settings
                             </a>
                         </li>
                     </ul>

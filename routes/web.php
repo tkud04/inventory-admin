@@ -36,5 +36,5 @@ Route::get('zohoverify/{url}', 'MainController@getZoho');
 /*******************************************
          MOBILE APP ROUTES
 *******************************************/
-Route::get('/', 'MobileAppController@getIndex');
-Route::get('login', 'MobileAppController@getLogin');
+Route::get('app', 'MobileAppController@getIndex');
+Route::get('app-login', 'MobileAppController@getLogin');

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BankAccounts extends Model
+class ProductData extends Model
 {
 
     /**
@@ -13,6 +13,6 @@ class BankAccounts extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'acname', 'acnum', 'balance', 'status'
+        'id', 'sku', 'qtype', 'cp', 'sp', 'stock', 'notes', 'category', 'img'
     ];
 }

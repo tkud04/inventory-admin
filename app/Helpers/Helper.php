@@ -121,20 +121,7 @@ $subject = $data['subject'];
                                                       
                 return $ret;
            }
-           
-           function createBankAccount($data)
-           {
-           	$ret = BankAccounts::create(['user_id' => $data['user_id'],                                                                                                          
-                                                      'status' => "active",
-                                                      'acname' => $data['acname'],                                                     
-                                                      'acnum' => $data['acnum'],
-                                                      'balance' => "0"
-                                                      ]);
-                                                      
-                return $ret;
-           }
-           
-
+                 
            
            function addSettings($data)
            {
@@ -145,23 +132,7 @@ $subject = $data['subject'];
                                                       
                 return $ret;
            }
-           
-           function getSetting($i)
-          {
-          	$ret = "";
-          	$settings = Settings::where('item',$i)->first();
-               
-               if($settings != null)
-               {
-               	//get the current withdrawal fee
-               	$ret = $settings->value;
-               }
-               
-               return $ret; 
-          }
-          
- 
-           
+        
            function getUser($email)
            {
            	$ret = [];
@@ -238,202 +209,7 @@ $subject = $data['subject'];
                }                                 
                   return $ret;                               
            }	
-           function updateProfile($user, $data)
-           {  
-              $ret = 'error'; 
-         
-              if(isset($data['xf']))
-               {
-               	$u = User::where('id', $data['xf'])->first();
-                   
-                        if($u != null && $user == $u)
-                        {
-							$role = $u->role;
-							if(isset($data['role'])) $role = $data['role'];
-							$status = $u->status;
-							if(isset($data['status'])) $role = $data['status'];
-							
-                        	$u->update(['fname' => $data['fname'],
-                                              'lname' => $data['lname'],
-                                              'email' => $data['email'],
-                                              'phone' => $data['phone'],
-                                              'role' => $role,
-                                              'status' => $status,
-                                              #'verified' => $data['verified'],
-                                           ]);
-                                           
-                                           $ret = "ok";
-                        }                                    
-               }                                 
-                  return $ret;                               
-           }	
  
-           function getBankAccount($user)
-           {
-           	   $ret = [];
-               $b = BankAccounts::where('user_id',$user->id)->first();
- 
-              if($b != null)
-               {
-                   	$temp['status'] = $b->status; 
-                       $temp['acname'] = $b->acname; 
-                       $temp['acnum'] = $b->acnum;
-                       $temp['balance'] = $b->balance;
-                       $temp['date'] = $b->created_at->format("jS F, Y"); 
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
-           }
-
-		   function getConfigs($id)
-           {
-           	   $ret = [];
-				   $c =  Configs::where('user_id',$id)->get();
-				   if($c != null)
-				   {
-					  foreach($c as $cc)
-					  {
-					    $balance = $cc->balance;
-				        $status = $cc->status; 
-				         $acnum = $cc->acnum; 
-				        $acname = $cc->acname; 
-				   
-                   	   $temp['cn'] = $cc->cn; 
-                   	   $temp['acnum'] = $acnum;
-                       $temp['acname'] = $acname; 
-                   	     $temp['status'] = $status; 
-                         $temp['balance'] = $balance;
-                         $temp['date'] = $cc->created_at->format("jS F, Y"); 
-                         array_push($ret,$temp); 
-					  }
-                    }                          
-                                                      
-                return $ret;
-           }
-		   function getConfig($id,$config)
-           {
-           	   $ret = [];
-				   $c =  Configs::where('user_id',$id)->where('cn',$config)->first();
-				   if($c != null)
-				   {
-					  $balance = $c->balance;
-				      $status = $c->status; 
-				      $acname = $c->acname; 
-				      $acnum = $c->acnum; 
-				   
-                   	   $temp['cn'] = $c->cn; 
-                   	   $temp['acnum'] = $acnum; 
-                            $temp['acname'] = $acname; 
-                   	   $temp['status'] = $status; 
-                       $temp['balance'] = $balance;
-                       $temp['date'] = $c->created_at->format("jS F, Y"); 
-                       $ret = $temp; 
-                    }                          
-                                                      
-                return $ret;
-           }
-		   
-		   function getUserData($user)
-           {
-           	   $ret = [];
-               $ud = UserData::where('user_id',$user->id)->first();
- 
-              if($ud != null)
-               {
-                   	$temp['address'] = $ud->address; 
-                       $temp['state'] = $ud->state; 
-                       $temp['address'] = $ud->address;
-                       $temp['city'] = $ud->city;
-                       $temp['company'] = $ud->company;
-                       $temp['zipcode'] = $ud->zipcode;
-                       $temp['date'] = $ud->created_at->format("jS F, Y"); 
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
-           }	  
-           
-           function updateBankAccount($user, $data)
-           {
-           	$b = BankAccounts::where('user_id',$user->id)->first();
- 
-              if($b != null)
-               {
-               	   $b->update(['acnum' => $data['acnum'],
-                           'acname' => $data['acname'],
-                                          'balance' => $data['balance'],
-                                          'status' => $data['status']
-                      ]);               
-               }
-           }	
-
-		   function updateConfig($data)
-           {
-           	$c = Configs::where('user_id',$data['xf'])->where('cn',$data['cn'])->first();
- 
-              if($c != null)
-               {
-               	   $c->update(['acnum' => $data['acnum'],
-                                 'acname' => $data['acname'],
-				                'balance' => $data['balance'],
-                                          'status' => $data['status']
-                      ]);               
-               }
-           }	
- 	  
-           function getDashboard($user)
-           {
-           	$ret = [];
-               $dealData = DealData::where('sku',$sku)->first();
- 
-              if($dealData != null)
-               {
-               	$ret['id'] = $dealData->id; 
-                   $ret['description'] = $dealData->description; 
-                   $ret['amount'] = $dealData->amount; 
-                   $ret['in_stock'] = $dealData->in_stock; 
-                   $ret['min_bid'] = $dealData->min_bid; 
-               }                                 
-                                                      
-                return $ret;
-           }		  
-
-           function addSmtpConfig($data)
-           {
-           	return SmtpConfigs::create(['host' => $data['ss'],                                                                                                          
-                                            'port' => $data['sp'],
-                                            'user' => $data['su'],
-                                            'pass' => $data['spp'],
-                                            'enc' => $data['se'],
-                                            'auth' => $data['sa'],
-                                            'status' => 'disabled'
-                                          ]);
-           }
-           
-           function getSmtpConfig()
-           {
-           	$ret = [];
-               $config = SmtpConfigs::where('id','>','0')->first();
- 
-              if($config != null)
-               {
-                   	$temp['host'] = $config->host; 
-                       $temp['port'] = $config->port; 
-                       $temp['user'] = $config->user; 
-                       $temp['pass'] = $config->pass; 
-                       $temp['enc'] = $config->enc; 
-                       $temp['auth'] = $config->auth; 
-                       $temp['status'] = $config->status; 
-                       $temp['date'] = $config->created_at->format("jS F, Y"); 
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
-           }	  
-           
-  
-           
            function hasKey($arr,$key) 
            {
            	$ret = false; 
@@ -512,35 +288,59 @@ $subject = $data['subject'];
               return $ret; 
            }
 		   
-		   function getConfigNumber()
+		   function appSignup($data)
 		   {
-			   return rand(1999,9999999);
-		   }
-		   
-		    function addConfig($data)
-           {
-			 $ret = Configs::where('user_id',$data['xf'])
-			               ->where('cn',$data['cn'])->first();
-			if($ret == null)
-			{
-				$ret = Configs::create(['user_id' => $data['xf'],                                                                                                          
-                                                      'cn' => $data['cn'], 
-                                                      'acname' => $data['acname'], 
-                                                      'acnum' => $data['acnum'], 
-                                                      'balance' => $data['balance'], 
-                                                      'status' => $data['status'], 
-                                                      ]);
-			}
+			 //authenticate this login
+            if(Auth::attempt(['email' => $data['id'],'password' => $data['password'],'status'=> "enabled"]) || Auth::attempt(['phone' => $data['id'],'password' => $data['password'],'status'=> "enabled"]))
+            {
+            	//Login successful               
+               $user = Auth::user();          
+			   $dt = [
+			     'id' => $user->id,
+			     'fname' => $user->fname,
+			     'lname' => $user->lname,
+			     'email' => $user->email,
+			     'phone' => $user->phone,
+			   ];
+			   
+			   //TODO: download synced data
+               $ret = ['status' => "ok",'user' => $dt];
+            }
+			
 			else
 			{
-           	   $ret->update(['acname' => $data['acname'], 
-                                                      'acnum' => $data['acnum'], 
-                                                      'balance' => $data['balance'], 
-                                                      'status' => $data['status'], 
-                                                      ]);
-			}                                         
-                return $ret;
-           }
+				$ret = ['status' => "error",'message' => "Login failed, please contact support"];
+			}
+			
+			return $ret;
+		   }
+		   
+		   function appLogin($data)
+		   {
+			 //authenticate this login
+            if(Auth::attempt(['email' => $data['id'],'password' => $data['password'],'status'=> "enabled"]) || Auth::attempt(['phone' => $data['id'],'password' => $data['password'],'status'=> "enabled"]))
+            {
+            	//Login successful               
+               $user = Auth::user();          
+			   $dt = [
+			     'id' => $user->id,
+			     'fname' => $user->fname,
+			     'lname' => $user->lname,
+			     'email' => $user->email,
+			     'phone' => $user->phone,
+			   ];
+			   
+			   //TODO: download synced data
+               $ret = ['status' => "ok",'user' => $dt];
+            }
+			
+			else
+			{
+				$ret = ['status' => "error",'message' => "Login failed, please contact support"];
+			}
+			
+			return $ret;
+		   }
            
            
 }

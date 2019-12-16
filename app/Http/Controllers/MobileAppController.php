@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Helpers\Contracts\HelperContract; 
-use Auth;
 use Session; 
 use Validator; 
 use Carbon\Carbon; 
@@ -27,6 +26,71 @@ class MobileAppController extends Controller {
 	public function getIndex()
     {
        	return json_encode(['status' => "ok",'version'=>"1.0"]);
+    }
+	
+	/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+    public function getLogin(Request $request)
+    {
+    	$user = null;
+        
+        $req = $request->all();
+		#dd($req);
+        $validator = Validator::make($req, [
+                             'username' => 'required|min:6',
+                             'password' => 'required|password',                        
+         ]);
+         
+         if($validator->fails())
+         {
+             $messages = $validator->messages();
+             $ret = ['status' => "error",'message'=>"Invalid username or password."];
+             //dd($messages);
+         }
+         
+         else
+         {
+             $ret = $this->helpers->appLogin($req);
+         }
+
+         return json_encode($ret);		 
+    }
+	
+	/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+    public function getSignup(Request $request)
+    {
+    	$user = null;
+        
+        $req = $request->all();
+		#dd($req);
+        $validator = Validator::make($req, [
+                             'email' => 'required|email',
+                             'phone' => 'required|numeric',
+                             'fname' => 'required',
+                             'lname' => 'required',
+                             'password' => 'required|password',                        
+         ]);
+         
+         if($validator->fails())
+         {
+             $messages = $validator->messages();
+             $ret = ['status' => "error",'message'=>"Invalid username or password."];
+             //dd($messages);
+         }
+         
+         else
+         {
+             $ret = $this->helpers->appLogin($req);
+         }
+
+         return json_encode($ret);		 
     }
 
      /**

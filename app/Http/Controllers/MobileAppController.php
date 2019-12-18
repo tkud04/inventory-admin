@@ -74,13 +74,13 @@ class MobileAppController extends Controller {
                              'email' => 'required|email',
                              'phone' => 'required|numeric',
                              'name' => 'required',
-                             'password' => 'required|password',                        
+                             'password' => 'required|min:6',                        
          ]);
          
          if($validator->fails())
          {
              $messages = $validator->messages();
-             $ret = ['status' => "error",'message'=>"Invalid username or password."];
+             $ret = ['status' => "error",'message'=>"Validation error"];
              //dd($messages);
          }
          

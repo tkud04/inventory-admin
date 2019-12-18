@@ -100,6 +100,7 @@ $subject = $data['subject'];
            	$ret = User::create(['name' => $data['name'], 
                                                       'email' => $data['email'], 
                                                       'phone' => $data['phone'], 
+                                                      'tk' => $data['tk'], 
                                                       'role' => "user", 
                                                       'status' => "enabled", 
                                                       'verified' => "yes", 
@@ -289,7 +290,8 @@ $subject = $data['subject'];
 		   
 		   function appSignup($data)
 		   {
-			
+			$this->createUser($data);
+			$ret = ['status' => "ok",'message' => "User created"];
 			
 			return $ret;
 		   }

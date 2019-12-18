@@ -41,7 +41,7 @@ class MobileAppController extends Controller {
 		#dd($req);
         $validator = Validator::make($req, [
                              'username' => 'required|min:6',
-                             'password' => 'required|password',                        
+                             'password' => 'required|min:6',                        
          ]);
          
          if($validator->fails())

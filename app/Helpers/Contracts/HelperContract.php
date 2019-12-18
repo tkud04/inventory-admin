@@ -13,5 +13,9 @@ Interface HelperContract
         public function hasKey($arr,$key);
         public function bomb($data);
         public function appLogin($data);
+        public function appSignup($data);
+        public function getUserProducts($user);
+        public function getUserCustomers($user);
+        public function getUserSales($user);
 }
  ?>

@@ -299,20 +299,28 @@ $subject = $data['subject'];
 		   function appLogin($data)
 		   {
 			 //authenticate this login
-            if(Auth::attempt(['email' => $data['id'],'password' => $data['password'],'status'=> "enabled"]) || Auth::attempt(['phone' => $data['id'],'password' => $data['password'],'status'=> "enabled"]))
+            if(Auth::attempt(['email' => $data['username'],'password' => $data['password'],'status'=> "enabled"]) || Auth::attempt(['phone' => $data['username'],'password' => $data['password'],'status'=> "enabled"]))
             {
             	//Login successful               
                $user = Auth::user();          
 			   $dt = [
-			     'id' => $user->id,
-			     'fname' => $user->fname,
-			     'lname' => $user->lname,
+			     'tk' => $user->tk,
+			     'name' => $user->name,
 			     'email' => $user->email,
 			     'phone' => $user->phone,
 			   ];
 			   
-			   //TODO: download synced data
-               $ret = ['status' => "ok",'user' => $dt];
+			   $products = $this->getUserProducts($user);
+			   $customers = $this->getUserCustomers($user);
+			   $sales = $this->getUserSales($user);
+			   
+			   $ret = [
+			     'status' => "ok",
+				 'user' => $dt,
+				 'products' => $products,
+				 'sales' => $sales,
+				 'customers' => $customers,
+				];
             }
 			
 			else
@@ -322,6 +330,22 @@ $subject = $data['subject'];
 			
 			return $ret;
 		   }
+		   
+		   
+		   function getUserCustomers($user)
+		   {
+			   return ['status' => "ok","customers" => []];
+		   }
+		   function getUserProducts($user)
+		   {
+			   return ['status' => "ok","products" => []];
+		   }
+		   function getUserSales($user)
+		   {
+			   return ['status' => "ok","sales" => []];
+		   }
+		   
+		   
            
            
 }

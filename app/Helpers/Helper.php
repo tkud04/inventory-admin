@@ -97,14 +97,13 @@ $subject = $data['subject'];
 
            function createUser($data)
            {
-           	$ret = User::create(['fname' => $data['fname'], 
-                                                      'lname' => $data['lname'], 
+           	$ret = User::create(['name' => $data['name'], 
                                                       'email' => $data['email'], 
                                                       'phone' => $data['phone'], 
-                                                      'role' => $data['role'], 
-                                                      'status' => $data['status'], 
-                                                      'verified' => $data['verified'], 
-                                                      'password' => bcrypt($data['pass']), 
+                                                      'role' => "user", 
+                                                      'status' => "enabled", 
+                                                      'verified' => "yes", 
+                                                      'password' => bcrypt($data['password']), 
                                                       ]);
                                                       
                 return $ret;
@@ -290,27 +289,7 @@ $subject = $data['subject'];
 		   
 		   function appSignup($data)
 		   {
-			 //authenticate this login
-            if(Auth::attempt(['email' => $data['id'],'password' => $data['password'],'status'=> "enabled"]) || Auth::attempt(['phone' => $data['id'],'password' => $data['password'],'status'=> "enabled"]))
-            {
-            	//Login successful               
-               $user = Auth::user();          
-			   $dt = [
-			     'id' => $user->id,
-			     'fname' => $user->fname,
-			     'lname' => $user->lname,
-			     'email' => $user->email,
-			     'phone' => $user->phone,
-			   ];
-			   
-			   //TODO: download synced data
-               $ret = ['status' => "ok",'user' => $dt];
-            }
 			
-			else
-			{
-				$ret = ['status' => "error",'message' => "Login failed, please contact support"];
-			}
 			
 			return $ret;
 		   }

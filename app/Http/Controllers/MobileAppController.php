@@ -73,8 +73,7 @@ class MobileAppController extends Controller {
         $validator = Validator::make($req, [
                              'email' => 'required|email',
                              'phone' => 'required|numeric',
-                             'fname' => 'required',
-                             'lname' => 'required',
+                             'name' => 'required',
                              'password' => 'required|password',                        
          ]);
          
@@ -87,7 +86,7 @@ class MobileAppController extends Controller {
          
          else
          {
-             $ret = $this->helpers->appLogin($req);
+             $ret = $this->helpers->appSignup($req);
          }
 
          return json_encode($ret);		 

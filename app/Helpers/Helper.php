@@ -544,7 +544,7 @@ $subject = $data['subject'];
 				$s->delete();
 			}
 			
-			Customers::where('user_id',$u->id)->delete();
+			Customers::where('user_id',$user->id)->delete();
 		  }
 		   
 		   

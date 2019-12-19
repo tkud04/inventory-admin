@@ -13,6 +13,6 @@ class Sales extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'customer_id', 'tax', 'shipping', 'discount', 'notes', 'status'
+        'id', 'user_id', 'customer_id', 'tax', 'shipping', 'discount', 'notes', 'status'
     ];
 }

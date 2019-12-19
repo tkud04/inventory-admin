@@ -14,6 +14,8 @@ use App\Settings;
 use App\Configs;
 use App\UserData;
 use App\SmtpConfigs;
+use App\Products;
+use App\ProductData;
 use GuzzleHttp\Client;
 
 class Helper implements HelperContract
@@ -117,6 +119,31 @@ $subject = $data['subject'];
                                                       'address' => "", 
                                                       'city' => "", 
                                                       'state' => "", 
+                                                      ]);
+                                                      
+                return $ret;
+           }
+           
+           function createProduct($u,$data)
+           {
+           	$ret = Products::create(['user_id' => $u->id, 
+                                                      'name' => $data['email'], 
+                                                      'sku' => $data['phone'], 
+                                                      'status' => "ok",
+                                                      ]);
+                                                      
+                return $ret;
+           }
+           function createProductData($data)
+           {
+           	$ret = ProductData::create(['sku' => $data['sku'],                                                                                                          
+                                                      'qtype' => $data['qtype'], 
+                                                      'cp' => $data['cp'],                                                      
+                                                      'sp' => $data['sp'], 
+                                                      'stock' => $data['stock'], 
+                                                      'notes' => $data['notes'], 
+                                                      'category' => $data['category'], 
+                                                      'img' => $data['img'], 
                                                       ]);
                                                       
                 return $ret;
@@ -370,7 +397,7 @@ $subject = $data['subject'];
             	//Login successful               
                $user = Auth::user();   
                
-               #Decoee data
+               #Decode data
                  $dt = json_decode($data['dt']);
                  #dd($dt);
                  
@@ -382,15 +409,14 @@ $subject = $data['subject'];
 			   foreach($products as $p)
 			     {
 				    $pp = (array) $p;
-				   dd($pp);
+				   #dd($pp);
+				   $this->addProduct($user,$pp);
+				   $this->addProductData($pp);
 				 }
 			   
 			   $ret = [
 			     'status' => "ok",
-				 'user' => $dt,
-				 'products' => $products,
-				 'sales' => $sales,
-				 'customers' => $customers,
+				 'message' => "Sync successful",
 				];
             }
 			

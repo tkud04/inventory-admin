@@ -127,8 +127,8 @@ $subject = $data['subject'];
            function createProduct($u,$data)
            {
            	$ret = Products::create(['user_id' => $u->id, 
-                                                      'name' => $data['email'], 
-                                                      'sku' => $data['phone'], 
+                                                      'name' => $data['name'], 
+                                                      'sku' => $data['sku'], 
                                                       'status' => "ok",
                                                       ]);
                                                       

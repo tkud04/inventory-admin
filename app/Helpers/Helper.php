@@ -391,6 +391,7 @@ $subject = $data['subject'];
 		
 		function appSyncSend($data)
 		   {
+			$ret = ['status' => "unknown"];
 			 //authenticate this login
             if($this->isValidUser($data))
             {

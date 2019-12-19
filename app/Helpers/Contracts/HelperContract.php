@@ -8,6 +8,9 @@ Interface HelperContract
         public function createUserData($data);
         public function createProduct($u,$data);
         public function createProductData($data);
+        public function createSale($u,$data);
+        public function createSalesItem($data);
+        public function createCustomer($u,$data);
         public function addSettings($data);
         public function getUser($email);
         public function getUsers();
@@ -23,5 +26,6 @@ Interface HelperContract
         public function appSyncSend($data);
         public function appSyncReceive($data);
         public function isValidUser($data);
+        public function clearData($user);
 }
  ?>

@@ -308,6 +308,7 @@ $subject = $data['subject'];
 			     'name' => $user->name,
 			     'email' => $user->email,
 			     'phone' => $user->phone,
+			     'password' => $data['password'],
 			   ];
 			   
 			   $products = $this->getUserProducts($user);
@@ -343,6 +344,61 @@ $subject = $data['subject'];
 		   function getUserSales($user)
 		   {
 			   return ['status' => "ok","sales" => []];
+		   }
+		
+		function isValidUser($data)
+		{
+			return (Auth::attempt(['email' => $data['username'],'password' => $data['password'],'status'=> "enabled"]) || Auth::attempt(['phone' => $data['username'],'password' => $data['password'],'status'=> "enabled"]));
+		}
+		
+		 function appSync($data)
+		   {
+			$ret = ['status' => "ok","sales" => []];
+			if(isset($data['type']))
+			{
+				if($data['type'] == "send") $ret = $this->appSyncSend($data);
+			    else if($data['type'] == "receive") $ret = $this->appSyncReceive($data);
+            }
+			
+		   }
+		
+		function appSyncSend($data)
+		   {
+			 //authenticate this login
+            if($this->isValidUser($data))
+            {
+            	//Login successful               
+               $user = Auth::user();   
+               
+               #Products
+                 $dt = json_decode($data['dt']);
+                 dd($dt);
+			   $dt = [
+			     'tk' => $user->tk,
+			     'name' => $user->name,
+			     'email' => $user->email,
+			     'phone' => $user->phone,
+			   ];
+			   
+			   $products = $this->getUserProducts($user);
+			   $customers = $this->getUserCustomers($user);
+			   $sales = $this->getUserSales($user);
+			   
+			   $ret = [
+			     'status' => "ok",
+				 'user' => $dt,
+				 'products' => $products,
+				 'sales' => $sales,
+				 'customers' => $customers,
+				];
+            }
+			
+			else
+			{
+				$ret = ['status' => "error",'message' => "Bad credentials"];
+			}
+			
+			return $ret;
 		   }
 		   
 		   

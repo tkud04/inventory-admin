@@ -16,6 +16,9 @@ use App\UserData;
 use App\SmtpConfigs;
 use App\Products;
 use App\ProductData;
+use App\Customers;
+use App\Sales;
+use App\SalesItems;
 use GuzzleHttp\Client;
 
 class Helper implements HelperContract
@@ -129,7 +132,7 @@ $subject = $data['subject'];
            	$ret = Products::create(['user_id' => $u->id, 
                                                       'name' => $data['name'], 
                                                       'sku' => $data['sku'], 
-                                                      'status' => "ok",
+                                                      'status' => $data['status'],
                                                       ]);
                                                       
                 return $ret;
@@ -144,6 +147,46 @@ $subject = $data['subject'];
                                                       'notes' => $data['notes'], 
                                                       'category' => $data['category'], 
                                                       'img' => $data['img'], 
+                                                      ]);
+                                                      
+                return $ret;
+           }
+           
+           function createSale($u,$data)
+           {
+           	$ret = Sales::create(['user_id' => $u->id, 
+                                                      'customer_id' => $data['customer_id'], 
+                                                      'tax' => $data['tax'], 
+                                                      'shipping' => $data['shipping'], 
+                                                      'discount' => $data['discount'], 
+                                                      'notes' => $data['notes'], 
+                                                      'status' => $data['status'],
+                                                      ]);
+                                                      
+                return $ret;
+           }
+           function createSalesItem($data)
+           {
+           	$ret = ProductData::create(['sales_id' => $data['sales_id'],                                                                                                          
+                                                      'qty' => $data['qty'], 
+                                                      'product_id' => $data['product_id'],                                                                                                          
+                                                      ]);
+                                                      
+                return $ret;
+           }
+           
+           function createCustomer($u,$data)
+           {
+           	$ret = Customers::create(['user_id' => $data['user_id'],                                                                                                          
+                                                      'name' => $data['name'], 
+                                                      'type' => $data['type'],
+                                                      'email' => $data['email'],
+                                                      'phone' => $data['phone'],
+                                                      'gender' => $data['gender'],
+                                                      'sa' => $data['sa'],
+                                                      'notes' => $data['notes'],
+                                                      'img' => $data['img'],
+                                                      'status' => $data['status'],
                                                       ]);
                                                       
                 return $ret;
@@ -393,12 +436,14 @@ $subject = $data['subject'];
 		
 		function appSyncSend($data)
 		   {
+			
 			$ret = ['status' => "unknown"];
 			 //authenticate this login
             if($this->isValidUser($data))
             {
             	//Login successful               
                $user = Auth::user();   
+               $this->clearData($user);
                
                #Decode data
                  $dt = json_decode($data['dt']);
@@ -415,6 +460,19 @@ $subject = $data['subject'];
 				   #dd($pp);
 				   $this->createProduct($user,$pp);
 				   $this->createProductData($pp);
+				 }
+				
+				foreach($customers as $c)
+			     {
+				    $cc = (array) $c;
+				   $this->createCustomer($user,$cc);   
+				 }
+				
+				foreach($sales as $s)
+			     {
+				    $ss = (array) $s;
+				   $this->createSale($user,$ss);
+				   $this->createSalesItem($ss);
 				 }
 			   
 			   $ret = [
@@ -470,14 +528,23 @@ $subject = $data['subject'];
 			return $ret;
 		   }
 		
-		function parseData($data)
+		function clearData($user)
 		   {
-			$ret = [];
-			foreach($data as $d)
+			 $pp = Products::where('user_id',$user->id)->get();
+			foreach($pp as $p)
 			{
-				
+				ProductData::where('sku',$p->sku)->delete();
+				$p->delete();
+			}
+			 
+			 $ss = Sales::where('user_id',$user->id)->get();
+			 foreach($ss as $s)
+			{
+				SalesItems::where('sales_id',$s->id)->delete();
+				$s->delete();
 			}
 			
+			Customers::where('user_id',$u->id)->delete();
 		  }
 		   
 		   

@@ -410,8 +410,8 @@ $subject = $data['subject'];
 			     {
 				    $pp = (array) $p;
 				   #dd($pp);
-				   $this->addProduct($user,$pp);
-				   $this->addProductData($pp);
+				   $this->createProduct($user,$pp);
+				   $this->createProductData($pp);
 				 }
 			   
 			   $ret = [

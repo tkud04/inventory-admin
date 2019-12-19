@@ -380,12 +380,14 @@ $subject = $data['subject'];
 		
 		 function appSync($data)
 		   {
-			$ret = ['status' => "ok","sales" => []];
+			$ret = ['status' => "unknown"];
 			if(isset($data['type']))
 			{
 				if($data['type'] == "send") $ret = $this->appSyncSend($data);
 			    else if($data['type'] == "receive") $ret = $this->appSyncReceive($data);
             }
+            
+           return $ret;
 			
 		   }
 		

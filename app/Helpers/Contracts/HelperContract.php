@@ -17,5 +17,9 @@ Interface HelperContract
         public function getUserProducts($user);
         public function getUserCustomers($user);
         public function getUserSales($user);
+        public function appSync($data);
+        public function appSyncSend($data);
+        public function appSyncReceive($data);
+        public function isValidUser($data);
 }
  ?>

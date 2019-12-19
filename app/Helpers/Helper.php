@@ -370,19 +370,20 @@ $subject = $data['subject'];
             	//Login successful               
                $user = Auth::user();   
                
-               #Products
+               #Decoee data
                  $dt = json_decode($data['dt']);
-                 dd($dt);
-			   $dt = [
-			     'tk' => $user->tk,
-			     'name' => $user->name,
-			     'email' => $user->email,
-			     'phone' => $user->phone,
-			   ];
-			   
-			   $products = $this->getUserProducts($user);
-			   $customers = $this->getUserCustomers($user);
-			   $sales = $this->getUserSales($user);
+                 #dd($dt);
+                 
+                #parse products
+                $products = $dt->products;
+                $customers = $dt->customers;
+                $sales = $dt->sales;
+                
+			   foreach($products as $p)
+			     {
+				    $pp = (array) $p;
+				   dd($p);
+				 }
 			   
 			   $ret = [
 			     'status' => "ok",
@@ -438,6 +439,16 @@ $subject = $data['subject'];
 			}
 			
 			return $ret;
+		   }
+		
+		function parseData($data)
+		   {
+			$ret = [];
+			foreach($data as $d)
+			{
+				$p
+			}
+			
 		   }
 		   
 		   

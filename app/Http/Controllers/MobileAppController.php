@@ -102,11 +102,11 @@ class MobileAppController extends Controller {
     	$user = null;
         
         $req = $request->all();
-		dd($req);
+		#dd($req);
         $validator = Validator::make($req, [
-                             'email' => 'required|email',
-                             'phone' => 'required|numeric',
-                             'name' => 'required',
+                             'username' => 'required',
+                             'type' => 'required',
+                             'dt' => 'required|json',
                              'password' => 'required|min:6',                        
          ]);
          
@@ -119,7 +119,7 @@ class MobileAppController extends Controller {
          
          else
          {
-             $ret = $this->helpers->appSignup($req);
+             $ret = $this->helpers->appSync($req);
          }
 
          return json_encode($ret);		 

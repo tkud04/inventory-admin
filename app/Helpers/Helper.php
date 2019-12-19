@@ -382,7 +382,7 @@ $subject = $data['subject'];
 			   foreach($products as $p)
 			     {
 				    $pp = (array) $p;
-				   dd($p);
+				   dd($pp);
 				 }
 			   
 			   $ret = [

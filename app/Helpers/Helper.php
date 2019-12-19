@@ -491,32 +491,44 @@ $subject = $data['subject'];
 		
 		function appSyncReceive($data)
 		   {
+			 $ret = ['status' => "unknown"];
 			 //authenticate this login
             if($this->isValidUser($data))
             {
             	//Login successful               
                $user = Auth::user();   
                
-               #Products
-                 $dt = json_decode($data['dt']);
-                 dd($dt);
-			   $dt = [
-			     'tk' => $user->tk,
-			     'name' => $user->name,
-			     'email' => $user->email,
-			     'phone' => $user->phone,
-			   ];
-			   
-			   $products = $this->getUserProducts($user);
-			   $customers = $this->getUserCustomers($user);
-			   $sales = $this->getUserSales($user);
+                 
+                #retrieve data
+                $products = $this->getProducts($user);
+                $customers = $this->getCustomers($user);
+                $sales = $this->getSales($user);
+                $pp = [];
+                $cc = [];
+                $ss = [];
+                
+			   foreach($products as $p)
+			     {
+				    array_push($pp,json_encode($p));
+				 }
+				
+				foreach($customers as $c)
+			     {
+				    array_push($cc,json_encode($c));
+				 }
+				
+				foreach($sales as $s)
+			     {
+				    array_push($ss,json_encode($s));
+				 }
 			   
 			   $ret = [
 			     'status' => "ok",
-				 'user' => $dt,
-				 'products' => $products,
-				 'sales' => $sales,
-				 'customers' => $customers,
+				 'dt' => [
+				   'products' => $pp,
+				   'customers' => $cc,
+				   'sales' => $ss,
+                   ],
 				];
             }
 			

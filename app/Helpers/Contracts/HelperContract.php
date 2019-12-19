@@ -6,6 +6,8 @@ Interface HelperContract
         public function sendEmailSMTP($data,$view,$type);
         public function createUser($data);
         public function createUserData($data);
+        public function createProduct($data);
+        public function createProductData($data);
         public function addSettings($data);
         public function getUser($email);
         public function getUsers();

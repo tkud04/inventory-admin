@@ -91,6 +91,39 @@ class MobileAppController extends Controller {
 
          return json_encode($ret);		 
     }
+    
+    /**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+    public function postAppSync(Request $request)
+    {
+    	$user = null;
+        
+        $req = $request->all();
+		dd($req);
+        $validator = Validator::make($req, [
+                             'email' => 'required|email',
+                             'phone' => 'required|numeric',
+                             'name' => 'required',
+                             'password' => 'required|min:6',                        
+         ]);
+         
+         if($validator->fails())
+         {
+             $messages = $validator->messages();
+             $ret = ['status' => "error",'message'=>"Validation error"];
+             //dd($messages);
+         }
+         
+         else
+         {
+             $ret = $this->helpers->appSignup($req);
+         }
+
+         return json_encode($ret);		 
+    }
 
      /**
 	 * Show the application welcome screen to the user.

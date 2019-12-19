@@ -400,6 +400,45 @@ $subject = $data['subject'];
 			
 			return $ret;
 		   }
+		
+		function appSyncReceive($data)
+		   {
+			 //authenticate this login
+            if($this->isValidUser($data))
+            {
+            	//Login successful               
+               $user = Auth::user();   
+               
+               #Products
+                 $dt = json_decode($data['dt']);
+                 dd($dt);
+			   $dt = [
+			     'tk' => $user->tk,
+			     'name' => $user->name,
+			     'email' => $user->email,
+			     'phone' => $user->phone,
+			   ];
+			   
+			   $products = $this->getUserProducts($user);
+			   $customers = $this->getUserCustomers($user);
+			   $sales = $this->getUserSales($user);
+			   
+			   $ret = [
+			     'status' => "ok",
+				 'user' => $dt,
+				 'products' => $products,
+				 'sales' => $sales,
+				 'customers' => $customers,
+				];
+            }
+			
+			else
+			{
+				$ret = ['status' => "error",'message' => "Bad credentials"];
+			}
+			
+			return $ret;
+		   }
 		   
 		   
            

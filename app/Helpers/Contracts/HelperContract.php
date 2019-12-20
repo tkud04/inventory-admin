@@ -28,5 +28,6 @@ Interface HelperContract
         public function getProductData($product);
         public function getSales($user);
         public function getSalesItems($sale);
+        public function getCustomers($user);
 }
  ?>

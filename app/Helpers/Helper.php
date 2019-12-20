@@ -558,8 +558,8 @@ $subject = $data['subject'];
                {
                 foreach($pp as $p)
 			     {
-				  $temp['qtype'] = $p->user_id; 
-				  $temp['cp'] = $p->name; 
+				  $temp['qtype'] = $p->qtype; 
+				  $temp['cp'] = $p->cp; 
 				  $temp['sku'] = $p->sku; 
 				  $temp['sp'] = $p->sp; 
 				  $temp['stocks'] = $p->stocks;

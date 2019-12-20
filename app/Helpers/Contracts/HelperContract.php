@@ -19,13 +19,14 @@ Interface HelperContract
         public function bomb($data);
         public function appLogin($data);
         public function appSignup($data);
-        public function getUserProducts($user);
-        public function getUserCustomers($user);
-        public function getUserSales($user);
         public function appSync($data);
         public function appSyncSend($data);
         public function appSyncReceive($data);
         public function isValidUser($data);
         public function clearData($user);
+        public function getProducts($user);
+        public function getProductData($product);
+        public function getSales($user);
+        public function getSalesItems($sale);
 }
  ?>

@@ -403,19 +403,7 @@ $subject = $data['subject'];
 		   }
 		   
 		   
-		   function getUserCustomers($user)
-		   {
-			   return ['status' => "ok","customers" => []];
-		   }
-		   function getUserProducts($user)
-		   {
-			   return ['status' => "ok","products" => []];
-		   }
-		   function getUserSales($user)
-		   {
-			   return ['status' => "ok","sales" => []];
-		   }
-		
+		   
 		function isValidUser($data)
 		{
 			return (Auth::attempt(['email' => $data['username'],'password' => $data['password'],'status'=> "enabled"]) || Auth::attempt(['phone' => $data['username'],'password' => $data['password'],'status'=> "enabled"]));
@@ -472,7 +460,7 @@ $subject = $data['subject'];
 			     {
 				    $ss = (array) $s;
 				   $this->createSale($user,$ss);
-				   $this->createSalesItem($ss);
+				   foreach($ss['items'] as $si) $this->createSalesItem($si);
 				 }
 			   
 			   $ret = [
@@ -500,27 +488,10 @@ $subject = $data['subject'];
                
                  
                 #retrieve data
-                $products = $this->getProducts($user);
-                $customers = $this->getCustomers($user);
-                $sales = $this->getSales($user);
-                $pp = [];
-                $cc = [];
-                $ss = [];
-                
-			   foreach($products as $p)
-			     {
-				    array_push($pp,json_encode($p));
-				 }
-				
-				foreach($customers as $c)
-			     {
-				    array_push($cc,json_encode($c));
-				 }
-				
-				foreach($sales as $s)
-			     {
-				    array_push($ss,json_encode($s));
-				 }
+                $pp = $this->getProducts($user);
+                $cc = $this->getCustomers($user);
+                $ss = $this->getSales($user);
+    
 			   
 			   $ret = [
 			     'status' => "ok",
@@ -558,6 +529,91 @@ $subject = $data['subject'];
 			
 			Customers::where('user_id',$user->id)->delete();
 		  }
+		
+		function getProducts($user)
+           {
+           	$ret = [];
+               $pp = Products::where('user_id',$user->id)->get();
+               if($pp != null)
+               {
+                foreach($pp as $p)
+			     {
+				  $temp['user_id'] = $p->user_id; 
+				  $temp['id'] = $p->id; 
+				  $temp['name'] = $p->name; 
+				  $temp['sku'] = $p->sku; 
+				  $temp['status'] = $p->status; 
+				  $temp['data'] = $this->getProductData($p);
+				  array_push($ret,$temp);
+			    }                
+              }                                       
+                return $ret;
+           }	  
+           
+           function getProductData($product)
+           {
+           	$ret = [];
+               $pp = ProductData::where('sku',$product->sku)->get();
+               if($pp != null)
+               {
+                foreach($pp as $p)
+			     {
+				  $temp['qtype'] = $p->user_id; 
+				  $temp['cp'] = $p->name; 
+				  $temp['sku'] = $p->sku; 
+				  $temp['sp'] = $p->sp; 
+				  $temp['stocks'] = $p->stocks;
+				  $temp['img'] = $p->img;
+				  $temp['category'] = $p->category;
+				  $temp['notes'] = $p->notes;
+				  array_push($ret,$temp);
+			    }                
+              }                                       
+                return $ret;
+           }	  
+           
+           
+           function getSales($user)
+           {
+           	$ret = [];
+               $ss = Sales::where('user_id',$user->id)->get();
+               if($ss != null)
+               {
+                foreach($ss as $s)
+			     {
+				  $temp['user_id'] = $s->user_id; 
+				  $temp['id'] = $s->id; 
+				  $temp['customer_id'] = $s->customer_id; 
+				  $temp['tax'] = $s->tax; 
+				  $temp['discount'] = $s->discount; 
+				  $temp['shipping'] = $s->shipping; 
+				  $temp['status'] = $s->status; 
+				  $temp['notes'] = $s->notes; 
+				  $temp['items'] = $this->getSalesItems($s);
+				  array_push($ret,$temp);
+			    }                
+              }                                       
+                return $ret;
+           }	  
+           
+           function getSalesItems($sale)
+           {
+           	$ret = [];
+               $ss = SalesItems::where('sales_id',$sale->id)->get();
+               if($ss != null)
+               {
+                foreach($ss as $s)
+			     {
+				  $temp['sales_id'] = $s->sales_id; 
+				  $temp['id'] = $s->id; 
+				  $temp['product_id'] = $s->product_id; 
+				  $temp['qty'] = $s->qty; 
+			
+				  array_push($ret,$temp);
+			    }                
+              }                            
+              return $ret;
+           }	  
 		   
 		   
            

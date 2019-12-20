@@ -615,6 +615,29 @@ $subject = $data['subject'];
               return $ret;
            }	  
 		   
+		function getCustomers($user)
+           {
+           	$ret = [];
+               $cc = Customers::where('user_id',$user->id)->get();
+               if($cc != null)
+               {
+                foreach($cc as $c)
+			     {
+				  $temp['user_id'] = $cc->user_id; 
+				  $temp['name'] = $cc->name; 
+				  $temp['type'] = $cc->type; 
+				  $temp['email'] = $cc->email; 
+				  $temp['phone'] = $cc->phone;
+				  $temp['img'] = $cc->img;
+				  $temp['gender'] = $cc->gender;
+				   $temp['sa'] = $cc->sa;
+				  $temp['notes'] = $cc->notes;
+				  $temp['status'] = $cc->status;
+				  array_push($ret,$temp);
+			    }                
+              }                                       
+                return $ret;
+           }	  
 		   
            
            

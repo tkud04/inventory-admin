@@ -623,16 +623,16 @@ $subject = $data['subject'];
                {
                 foreach($cc as $c)
 			     {
-				  $temp['user_id'] = $cc->user_id; 
-				  $temp['name'] = $cc->name; 
-				  $temp['type'] = $cc->type; 
-				  $temp['email'] = $cc->email; 
-				  $temp['phone'] = $cc->phone;
-				  $temp['img'] = $cc->img;
-				  $temp['gender'] = $cc->gender;
-				   $temp['sa'] = $cc->sa;
-				  $temp['notes'] = $cc->notes;
-				  $temp['status'] = $cc->status;
+				  $temp['user_id'] = $c->user_id; 
+				  $temp['name'] = $c->name; 
+				  $temp['type'] = $c->type; 
+				  $temp['email'] = $c->email; 
+				  $temp['phone'] = $c->phone;
+				  $temp['img'] = $c->img;
+				  $temp['gender'] = $c->gender;
+				   $temp['sa'] = $c->sa;
+				  $temp['notes'] = $c->notes;
+				  $temp['status'] = $c->status;
 				  array_push($ret,$temp);
 			    }                
               }                                       

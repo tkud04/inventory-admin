@@ -381,9 +381,9 @@ $subject = $data['subject'];
 			     'password' => $data['password'],
 			   ];
 			   
-			   $products = $this->getUserProducts($user);
-			   $customers = $this->getUserCustomers($user);
-			   $sales = $this->getUserSales($user);
+			   $products = $this->getProducts($user);
+			   $customers = $this->getCustomers($user);
+			   $sales = $this->getSales($user);
 			   
 			   $ret = [
 			     'status' => "ok",

@@ -18,6 +18,8 @@ Route::get('/', 'MainController@getIndex');
 Route::get('login', 'LoginController@getLogin');
 Route::post('login', 'LoginController@postLogin');
 
+Route::get('payment/callback', 'PaymentController@getPaymentCallback');
+
 Route::get('accounts', 'MainController@getAccounts');
 Route::post('accounts', 'MainController@postAccounts');
 Route::get('config', 'MainController@getAddConfig');
@@ -31,6 +33,5 @@ Route::get('logout', 'LoginController@getLogout');
 
 Route::get('practice', 'MainController@getPractice');
 Route::get('zohoverify/{url}', 'MainController@getZoho');
-
 
 

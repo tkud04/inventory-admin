@@ -99,8 +99,8 @@ class PaymentController extends Controller {
                 'status' => $paymentData['status'],
                 'reference' => $paymentData['reference']
             ];            
-        
-        return json_encode($ret);
+          $dt = json_encode($ret);
+        return view('payment-callback',compact(['dt']));
     }
     
     

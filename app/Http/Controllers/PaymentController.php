@@ -83,14 +83,12 @@ class PaymentController extends Controller {
 	 */
 	public function getPaymentCallback(Request $request)
     {
+    	$user = null;
 		if(Auth::check())
 		{
 			$user = Auth::user();
 		}
-		else
-        {
-        	return redirect()->intended('login?return=dashboard');
-        }
+		
 		
         $paymentDetails = Paystack::getPaymentData();
 

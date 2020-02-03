@@ -97,7 +97,7 @@ class PaymentController extends Controller {
      
         	$ret = [
                 'status' => $paymentData['status'],
-                'reference' => $paymentData['reference'];
+                'reference' => $paymentData['reference']
             ];            
         
         return json_encode($ret);

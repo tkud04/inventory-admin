@@ -8,7 +8,7 @@
 		    <div class="card">
 			  <div class="card-body">
 			    <center><img style="height: 100px; align:center;" class="img img-fluid" src="img/icon.png"> </center>
-			    <h2 class="text-success text-center">Payment successful! Redirecting you to Tembo.. <img style="margin-left: 10px; height: 25px;" class="img img-fluid" src="img/loading.gif"></h2>
+			    <h1 class="text-success text-center">Payment successful! Redirecting you to Tembo.. <img style="margin-left: 10px; height: 25px;" class="img img-fluid" src="img/loading.gif"></h1>
 				
 			  </div>
 			</div>

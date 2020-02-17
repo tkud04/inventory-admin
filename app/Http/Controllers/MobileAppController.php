@@ -79,7 +79,7 @@ class MobileAppController extends Controller {
          
          if($validator->fails())
          {
-             $messages = $validator->messages();
+             //$messages = $validator->messages();
              $ret = ['status' => "error",'message'=>"Validation error"];
              //dd($messages);
          }

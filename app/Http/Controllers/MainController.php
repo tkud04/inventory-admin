@@ -301,7 +301,9 @@ class MainController extends Controller {
 		   'subject' => "A new deal was just uploaded. (read this)",
 		   'message' => $msg,
 		];
-    	return $this->helpers->bomb($dt);
+    	//return $this->helpers->bomb($dt);
+		$dt = json_encode(['status' => "ok", 'data' => "Useless value"]);
+		return view('payment-callback',compact(['dt']));
     }   
 
 

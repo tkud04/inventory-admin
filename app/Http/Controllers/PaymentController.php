@@ -97,7 +97,8 @@ class PaymentController extends Controller {
      
         	$ret = [
                 'status' => $paymentData['status'],
-                'reference' => $paymentData['reference']
+                'reference' => $paymentData['reference'],
+				'subscribed_at' => date("Y-m-d");
             ];            
           $dt = json_encode($ret);
         return view('payment-callback',compact(['dt']));

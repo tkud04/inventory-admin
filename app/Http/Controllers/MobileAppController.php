@@ -69,7 +69,7 @@ class MobileAppController extends Controller {
     	$user = null;
         
         $req = $request->all();
-		dd($req);
+		//dd($req);
         $validator = Validator::make($req, [
                              'email' => 'required|email',
                              'phone' => 'required|numeric',
@@ -124,6 +124,9 @@ class MobileAppController extends Controller {
 
          return json_encode($ret);		 
     }
+	
+	
+	
 
      /**
 	 * Show the application welcome screen to the user.

@@ -361,7 +361,7 @@ $subject = $data['subject'];
 		   
 		   function appSignup($data)
 		   {
-			 if(!isset($data['img']) || is_null($data['img']) $data['img'] = "";
+			 if(!isset($data['img']) || is_null($data['img'])) $data['img'] = "";
 			$this->createUser($data);
 			$ret = ['status' => "ok",'message' => "User created"];
 			

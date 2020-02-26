@@ -105,6 +105,7 @@ $subject = $data['subject'];
            	$ret = User::create(['name' => $data['name'], 
                                                       'email' => $data['email'], 
                                                       'phone' => $data['phone'], 
+                                                      'img' => $data['img'], 
                                                       'tk' => $data['tk'], 
                                                       'role' => "user", 
                                                       'status' => "enabled", 
@@ -360,6 +361,7 @@ $subject = $data['subject'];
 		   
 		   function appSignup($data)
 		   {
+			 if(!isset($data['img']) || is_null($data['img']) $data['img'] = "";
 			$this->createUser($data);
 			$ret = ['status' => "ok",'message' => "User created"];
 			

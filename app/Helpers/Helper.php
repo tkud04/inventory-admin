@@ -512,6 +512,35 @@ $subject = $data['subject'];
 			
 			return $ret;
 		   }
+		   
+		 function appUpdateProfile($data)
+           {  
+              $ret = 'error'; 
+           
+              if(isset($data['email']))
+               {
+               	$u = User::where('email', $data['email'])->first();
+                   $name = $data['name'];
+				
+				   
+                        if($u != null)
+                        {
+                        	$u->update(['name' => $data['name'],
+                                              'email' => $data['email'],
+                                              'phone' => $data['phone']
+                                           ]);
+										   
+							if(isset($data['password']))
+							{
+								$u->update(['password' => bcrypt($data['password'])]);
+							}
+							
+                             $ret = ['status' => "ok"];
+                        }                                    
+               }                                 
+                  return $ret;                               
+           }	
+ 
 		
 		function clearData($user)
 		   {
